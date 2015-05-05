@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<!-- modification of https://stripe.com/docs/checkout#integration-custom -->
+<button id="customButton">Purchase</button>
+
+<script src="https://checkout.stripe.com/checkout.js"></script>  
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<script>
+var handler = StripeCheckout.configure({
+  key: '<YOUR-PUBLIC-KEY>',
+  image: 'https://googledrive.com/host/0AGVkNbQMTnaCUk9PVA/Google-Apps-Script.png',
+  token: function(token) {
+    // Use the token to create the charge with a server-side script.
+    // You can access the token ID with `token.id`
+    google.script.run.withSuccessHandler(chargeSuccess)
+    .withFailureHandler(chargeFailure)
+    .processCharge(token);
+  }
+});
+
+$('#customButton').on('click', function(e) {
+  // Open Checkout with further options
+  handler.open({
+    name: 'Stripe & Apps Script',
+    description: '$5 donation'
+  });
+  e.preventDefault();
+});
+
+function chargeSuccess(result) {
+  // handle response code client side 
+}
+
+function chargeFailure(error) {
+  // client error handling
+}
+</script>
+
+
