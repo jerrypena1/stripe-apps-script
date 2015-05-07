@@ -16,7 +16,7 @@ function processCharge(token) {
     var tokenId = token.id;
     var stripeEmail =  token.email;
     
-    // Create a Customer
+    // Create a Customer ( optional )
     var path = "/customers";
     var customer = Stripe_PostRequest(path, [], [], {
       "description": "test customer", 
